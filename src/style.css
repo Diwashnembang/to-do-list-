@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Aclonica&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Abel&display=swap");
+
+
+:root {
+  --primary-dark: #333;
+--secondary-dark: #444;
+--primary-light: #eee;
+--secondary-light: #ddd;
+  --primaryfont: "Aclonica", sans-serif;
+  --secondaryfont: "Abel", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header{
+    min-height:11vh;
+    background: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    padding-left: 1.2rem;
+}
+
+.title{
+    padding-left: 0.5rem;
+    color: var(--primary-light);
+    font-size: 2.8rem;
+    font-family: var(--secondaryfont);
+    font-weight: bold;
+}
+
+
+.fas{
+    font-size: 2.5rem;
+    color:var(--primary-light);
+}
+
+#main{
+    background-color:var(--primary-light);
+    height: 85vh;
+    width:100%;
+}
+aside{
+    background: var(--secondary-light);
+    width:15%;
+    height:85vh;
+
+}
+
+main{
+    display: flex;
+}
