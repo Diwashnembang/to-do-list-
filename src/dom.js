@@ -6,19 +6,19 @@ export class dom {
     this.footer = document.createElement("footer");
   }
 
-  createStructure() {
+  structure() {
     const header = this.body.appendChild(this.header);
     const main = this.body.appendChild(this.main);
     const footer = this.body.appendChild(this.footer);
-    return { header, main, footer };
+    return { headerDiv: header, mainDiv: main, footerDiv: footer };
   }
 
-  expandDom(dom, ...types) {
-    let key = 0;    
+  appendNodeOn(parentDom, ...types) {
+    let key = 0;
     let nodes = {};
     types.forEach((type) => {
       const newDom = document.createElement(type);
-      dom.appendChild(newDom);
+      parentDom.appendChild(newDom);
       nodes[key] = newDom;
       key++;
     });
@@ -26,7 +26,18 @@ export class dom {
     return nodes;
   }
 
-  clearDom(dom) {
+  prependNodeOn(parentDiv, type) {
+    console.log(parentDiv)
+    const newNode=document.createElement(type);
+    console.log(`parent div is ${parentDiv} and the type is ${type}`);
+    parentDiv.prepend(newNode);
+    return newNode;
+  }
+
+  dataTypeOn(div,type,value){
+    return div.setAttribite(`data-${type}`,`${value}`);
+  }
+  clear(dom) {
     dom.textContent = "";
   }
 }

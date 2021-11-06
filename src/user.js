@@ -1,7 +1,7 @@
-export class todo {
+export class user {
 
 
-  static TodoData(_title, _description, _date, _priority) {
+  Todo(_title, _description, _date, _priority) {
     const data = {
       title: _title,
       description: _description,
@@ -11,5 +11,12 @@ export class todo {
  
     return data;
   }
+
+  project(name,dueDate){
+    return {name,dueDate};
+
+  }
+
+  
 
 }

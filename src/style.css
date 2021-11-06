@@ -1,12 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Aclonica&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Abel&display=swap");
 
-
 :root {
   --primary-dark: #333;
---secondary-dark: #444;
---primary-light: #eee;
---secondary-light: #ddd;
+  --secondary-dark: #444;
+  --primary-light: #eee;
+  --secondary-light: #ddd;
   --primaryfont: "Aclonica", sans-serif;
   --secondaryfont: "Abel", sans-serif;
 }
@@ -17,40 +16,74 @@
   box-sizing: border-box;
 }
 
-header{
-    min-height:11vh;
-    background: var(--primary-dark);
-    display: flex;
-    align-items: center;
-    padding-left: 1.2rem;
+header {
+  min-height: 11vh;
+  background: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  padding-left: 1.2rem;
 }
 
-.title{
-    padding-left: 0.5rem;
-    color: var(--primary-light);
-    font-size: 2.8rem;
-    font-family: var(--secondaryfont);
-    font-weight: bold;
+.title {
+  padding-left: 0.5rem;
+  color: var(--primary-light);
+  font-size: 2.8rem;
+  font-family: var(--secondaryfont);
+  font-weight: bolder;
 }
 
-
-.fas{
-    font-size: 2.5rem;
-    color:var(--primary-light);
+.fas {
+  font-size: 2.5rem;
+  color: var(--primary-light);
 }
 
-#main{
-    background-color:var(--primary-light);
-    height: 85vh;
-    width:100%;
+#main {
+  background-color: var(--primary-light);
+  height: 85vh;
+  width: 100%;
+  color: var(--primary-dark);
 }
-aside{
-    background: var(--secondary-light);
-    width:15%;
-    height:85vh;
-
+aside {
+  background: var(--secondary-light);
+  width: 18.5%;
+  height: 85vh;
 }
 
-main{
-    display: flex;
+main {
+  display: flex;
+  font-family: var(--primaryfont);
+}
+
+.fa-inbox,
+.fa-calendar-week,
+.fa-calendar-day {
+  color: black;
+  font-size: 1rem;
+  padding-right: 0.8rem;
+}
+
+.asideText {
+  width: 87%;
+  /* background:#ccc; */
+  margin-left: 1.1rem;
+  font-size: 1.1rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  padding-left: 1.2rem;
+  border-radius: 0.2rem;
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+.inbox {
+  margin-top: 1.3rem;
+  background-color: #ccc;
+}
+
+.project {
+  margin-top: 1.5rem;
+  font-size: 1.8rem;
+  margin-left: 1.1rem;
+  font-weight: lighter;
 }

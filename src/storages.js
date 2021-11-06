@@ -16,14 +16,14 @@ export class storage {
     this.storage = [];
   }
 
-  #mergeToDoAndProject(projectName, todoData) {
+  #merge(projectName, todoData) {
     const newData = {};
     newData[projectName] = todoData;
     return newData;
   }
 
   store() {
-    let data = this.#mergeToDoAndProject();
+    let data = this.#merge();
     this.storage.push(data);
   }
 }
