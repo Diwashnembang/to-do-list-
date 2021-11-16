@@ -27,7 +27,6 @@ export class dom {
   }
 
   prependNodeOn(parentDiv, type) {
-    console.log(parentDiv)
     const newNode=document.createElement(type);
     console.log(`parent div is ${parentDiv} and the type is ${type}`);
     parentDiv.prepend(newNode);

@@ -1,29 +1,81 @@
-/*  
-*collets the project and todo from respective class and merge it 
-!{
-    !projectName:{
-    !   name:name,
-    !   discription:discription,
-    !   date:date;
-    !   priotiy:priority,
+
+
+export class storage {
+  constructor() {
+    this.storage = [{"demo":{
+        todos:{
+            todo0:"this is first to do ",
+            todo1:"this is the second to do"
+        },
+        discrioption:"this is demo"
+    }},];
+  }
+  /*  
+    *collets the project and todo from respective class and merge it 
+    !{
+        !const test={
+        !"demo":{
+            !todos:{
+                !todo1:"this is first to do "
+            !},
+            !discrioption:"this is demo"
+        !}
     !}
 !}
 
 */
 
-export class storage {
-  constructor() {
-    this.storage = [];
+
+#enumerateTodos(projectName){
+  let count=-1;
+  for(let i =0; i<this.storage.length;i++){
+    if(Object.keys(this.storage[i])[0]===projectName){
+      for (const key in this.storage[i][projectName].todos) {
+        console.log("this are the keys ",key)
+       count++
+
+
+    }
   }
 
-  #merge(projectName, todoData) {
-    const newData = {};
-    newData[projectName] = todoData;
-    return newData;
+}
+  return count;
+}
+  #formatData(projectName, task, discription, priority) {
+    const object = {};
+    const todos = {};
+    const todo = {};
+
+    object[projectName] = todos;
+    object[projectName].todos = todo;
+    //enumarate todos storage[]
+   
+    let totalTodos = this.#enumerateTodos(projectName);
+    console.log("this si totalTodos",totalTodos);
+    for(let i =0; i<this.storage.length;i++){
+      if(Object.keys(this.storage[i])[0]===projectName){
+        for (const key in this.storage[i][projectName].todos) {
+          object[projectName].todos[key] =
+            this.storage[i][projectName].todos[key];
+
+      }
+  }
+}
+    object[projectName].todos[`todo${totalTodos+1}`] = task;
+    
+    object[projectName].discription = discription;
+    object[projectName].priority = priority;
+    console.log(object)
+    return object;
   }
 
-  store() {
-    let data = this.#merge();
-    this.storage.push(data);
+
+  // todo : add a way to edit the data and add date also
+
+  store(projectName,task, discription, priority) {
+    let data = this.#formatData(projectName, task, discription, priority);
+    // this.storage.push(data);
+
+    this.storage[0]=data;
   }
 }

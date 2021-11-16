@@ -72,7 +72,6 @@ main {
   align-items: center;
   padding-left: 1.2rem;
   border-radius: 0.2rem;
-  font-weight: lighter;
   cursor: pointer;
 }
 
@@ -86,4 +85,21 @@ main {
   font-size: 1.8rem;
   margin-left: 1.1rem;
   font-weight: lighter;
+}
+
+.form{
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  font-family: var(--secondaryfont);
+ 
+
+}
+
+
+input button {
+  border: none;
+}
+
+#todo-container{
+  background-color: violet;
 }

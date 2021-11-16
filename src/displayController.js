@@ -15,9 +15,8 @@ const display = (() => {
     return _page.appendNodeOn(parentDiv, ...type);
   }
 
-  function _addNodeBefore(parentDiv,type){
-    return _page.prependNodeOn(parentDiv,type);
-
+  function _addNodeBefore(parentDiv, type) {
+    return _page.prependNodeOn(parentDiv, type);
   }
   function headerChildOn(headerDiv) {
     const title = _addNodeOn(headerDiv, "div", "div");
@@ -30,10 +29,16 @@ const display = (() => {
   function mainChildOn(mainDiv) {
     const body = _addNodeOn(mainDiv, "aside", "div"); //!returns an obj that starts with key 0.not an array
     const asideDiv = body[0];
-    const main = body[1];
+    let main = body[1];
     main.setAttribute("id", "main");
     _asideContentOn(asideDiv);
     main.textContent = " ";
+  }
+
+  function displayTodo(main) {
+    const container = _addNodeOn(main, "div");
+    const todo=container[0];
+
   }
 
   function _asideContentOn(asideDiv) {
@@ -65,17 +70,37 @@ const display = (() => {
     thisWeekDiv.innerHTML = "<i class='fas fa-calendar-week'></i>This Week";
     projectDiv.textContent = "Project";
     _projectChildOn(wrapProjectsDiv);
+    _addProjecForm(wrapProjectsDiv);
   }
 
   function _projectChildOn(wrappingDiv) {
-    const divNode=_addNodeOn(wrappingDiv,"div");
-    const addProject=_addNodeBefore(divNode[0],"div");
-    addProject.textContent="Add Project"
-    addProject.classList.add("asideText")
+    const divNode = _addNodeOn(wrappingDiv, "div");
+    const addProject = _addNodeBefore(divNode[0], "div");
+    addProject.textContent = "Add Project";
+    addProject.classList.add("asideText");
 
 
+    addProject.setAttribute("id", "addProject");
   }
 
-  return { makeDom, headerChildOn, mainChildOn };
+  function _addProjecForm(container) {
+    const form = _addNodeBefore(container, "div");
+    const input = _addNodeOn(form, "input")[0];
+    const button = _addNodeOn(form, "button")[0];
+    button.classList.add("asideText");
+    button.classList.add("button");
+
+
+    input.classList.add("form");
+    input.classList.add("asideText");
+    input.classList.add("projectName");
+
+
+    button.textContent = "Add to-do";
+    // add[0].classList.add("form")
+    // form.textContent="hello world"
+  }
+
+  return { makeDom, headerChildOn, mainChildOn, displayTodo };
 })();
 export { display };
