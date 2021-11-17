@@ -1,7 +1,7 @@
 const display = (() => {
+  let _page = null;
   // *https://fontawesome.com/v5.15/icons/check-double?style=solid for the logo .give credit
 
-  let _page = null;
   // const page=document
 
   // *todo make some working prototype till evening
@@ -32,13 +32,23 @@ const display = (() => {
     let main = body[1];
     main.setAttribute("id", "main");
     _asideContentOn(asideDiv);
-    main.textContent = " ";
+    const projectPreview = _addNodeOn(main, "div");
+    projectPreview[0].classList.add("projectPreview");
+    projectPreview[0].textContent = " ";
+    console.log(projectPreview);
   }
 
   function displayTodo(main) {
     const container = _addNodeOn(main, "div");
     const todo = container[0];
     return todo;
+  }
+
+  function mainHeader(main) {
+    const container = _addNodeOn(main, "div");
+    const header = container[0];
+    header.classList.add("mainHeader");
+    return header;
   }
 
   function _asideContentOn(asideDiv) {
@@ -99,7 +109,7 @@ const display = (() => {
     // form.textContent="hello world"
   }
 
-  return { makeDom, headerChildOn, mainChildOn, displayTodo };
+  return { makeDom, headerChildOn, mainChildOn, displayTodo, mainHeader };
 })();
 
 const onClickCategories = () => {
@@ -107,6 +117,7 @@ const onClickCategories = () => {
   const todayNode = document.querySelector(".today");
   const thisWeekNode = document.querySelector(".thisWeek");
   const categories = [inboxNode, todayNode, thisWeekNode];
+  const projectPreview = document.querySelector(".projectPreview");
 
   const _selected = (node) => {
     let alreadySelected;
@@ -120,15 +131,23 @@ const onClickCategories = () => {
       : console.log("ERROR WHIILE REMOVING SELECTED");
     node.setAttribute("data-isSelected", "yes");
   };
+  const _addheader = (node) => {
+    projectPreview.textContent="";
+    const header = display.mainHeader(projectPreview);
+    header.textContent = node.textContent;
+  };
   inboxNode.onclick = () => {
     _selected(inboxNode);
+    _addheader(inboxNode);
   };
 
   todayNode.onclick = () => {
     _selected(todayNode);
+    _addheader(todayNode);
   };
   thisWeekNode.onclick = () => {
     _selected(thisWeekNode);
+    _addheader(thisWeekNode);
   };
 };
 

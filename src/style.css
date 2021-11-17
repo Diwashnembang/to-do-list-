@@ -24,6 +24,20 @@ header {
   padding-left: 1.2rem;
 }
 
+.mainHeader{
+  font-family: var(--primaryfont);
+  font-size: 1.8rem;
+}
+
+.projectPreview{
+  margin:1.9rem 0rem ;
+  /* border: 5px solid red; */
+  width:50%
+  
+}
+
+
+
 .title {
   padding-left: 0.5rem;
   color: var(--primary-light);
@@ -42,6 +56,8 @@ header {
   height: 85vh;
   width: 100%;
   color: var(--primary-dark);
+  display: flex;
+  justify-content: space-evenly;
 }
 aside {
   background: var(--secondary-light);
