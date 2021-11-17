@@ -2,13 +2,7 @@
 
 export class storage {
   constructor() {
-    this.storage = [{"demo":{
-        todos:{
-            todo0:"this is first to do ",
-            todo1:"this is the second to do"
-        },
-        discrioption:"this is demo"
-    }},];
+    this.storage = []
   }
   /*  
     *collets the project and todo from respective class and merge it 
@@ -51,7 +45,7 @@ export class storage {
     //enumarate todos storage[]
    
     let totalTodos = this.#enumerateTodos(projectName);
-    console.log("this si totalTodos",totalTodos);
+ 
     for(let i =0; i<this.storage.length;i++){
       if(Object.keys(this.storage[i])[0]===projectName){
         for (const key in this.storage[i][projectName].todos) {

@@ -11,15 +11,15 @@ const display = (() => {
     return page.structure();
   }
 
-  function _addNodeOn(parentDiv, ...type) {
+  function addNodeOn(parentDiv, ...type) {
     return _page.appendNodeOn(parentDiv, ...type);
   }
 
-  function _addNodeBefore(parentDiv, type) {
+  function addNodeBefore(parentDiv, type) {
     return _page.prependNodeOn(parentDiv, type);
   }
   function headerChildOn(headerDiv) {
-    const title = _addNodeOn(headerDiv, "div", "div");
+    const title = addNodeOn(headerDiv, "div", "div");
     title[0].innerHTML = "<i class='fas fa-check-double'></i>"; //!returns an obj that starts with key 0 not an array
     title[0].classList.add("logo");
     title[1].textContent = "Todo List";
@@ -27,32 +27,32 @@ const display = (() => {
   }
 
   function mainChildOn(mainDiv) {
-    const body = _addNodeOn(mainDiv, "aside", "div"); //!returns an obj that starts with key 0.not an array
+    const body = addNodeOn(mainDiv, "aside", "div"); //!returns an obj that starts with key 0.not an array
     const asideDiv = body[0];
     let main = body[1];
     main.setAttribute("id", "main");
     _asideContentOn(asideDiv);
-    const projectPreview = _addNodeOn(main, "div");
+    const projectPreview = addNodeOn(main, "div");
     projectPreview[0].classList.add("projectPreview");
     projectPreview[0].textContent = " ";
     console.log(projectPreview);
   }
 
   function displayTodo(main) {
-    const container = _addNodeOn(main, "div");
+    const container = addNodeOn(main, "div");
     const todo = container[0];
     return todo;
   }
 
   function mainHeader(main) {
-    const container = _addNodeOn(main, "div");
+    const container = addNodeOn(main, "div");
     const header = container[0];
     header.classList.add("mainHeader");
     return header;
   }
 
   function _asideContentOn(asideDiv) {
-    const asideNodes = _addNodeOn(
+    const asideNodes = addNodeOn(
       asideDiv,
       "section",
       "section",
@@ -72,7 +72,7 @@ const display = (() => {
     thisWeekDiv.classList.add("asideText");
 
     const projectDiv = asideNodes[3];
-    projectDiv.classList.add("project");
+    projectDiv.classList.add("projectText");
     const wrapProjectsDiv = asideNodes[4];
     wrapProjectsDiv.classList.add("container");
 
@@ -85,8 +85,8 @@ const display = (() => {
   }
 
   function _projectChildOn(wrappingDiv) {
-    const divNode = _addNodeOn(wrappingDiv, "div");
-    const addProject = _addNodeBefore(divNode[0], "div");
+    const divNode = addNodeOn(wrappingDiv, "div");
+    const addProject = addNodeBefore(divNode[0], "div");
     addProject.textContent = "Add Project";
     addProject.classList.add("asideText");
 
@@ -94,22 +94,27 @@ const display = (() => {
   }
 
   function _addProjecForm(container) {
-    const form = _addNodeBefore(container, "div");
-    const input = _addNodeOn(form, "input")[0];
-    const button = _addNodeOn(form, "button")[0];
+    const form = addNodeBefore(container, "div");
+ 
+    // project.classList.add("hidden")
+    form.classList.add("hidden");
+    form.classList.add("addProjectForm");
+    const input = addNodeOn(form, "input")[0];
+    const button = addNodeOn(form, "button")[0];
     button.classList.add("asideText");
     button.classList.add("button");
+   
 
     input.classList.add("form");
     input.classList.add("asideText");
     input.classList.add("projectName");
-
+   
     button.textContent = "Add to-do";
     // add[0].classList.add("form")
     // form.textContent="hello world"
   }
 
-  return { makeDom, headerChildOn, mainChildOn, displayTodo, mainHeader };
+  return { makeDom, headerChildOn, mainChildOn, displayTodo, mainHeader ,addNodeOn,addNodeBefore};
 })();
 
 const onClickCategories = () => {

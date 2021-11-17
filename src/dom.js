@@ -28,7 +28,6 @@ export class dom {
 
   prependNodeOn(parentDiv, type) {
     const newNode=document.createElement(type);
-    console.log(`parent div is ${parentDiv} and the type is ${type}`);
     parentDiv.prepend(newNode);
     return newNode;
   }
@@ -39,4 +38,6 @@ export class dom {
   clear(dom) {
     dom.textContent = "";
   }
+
+  
 }

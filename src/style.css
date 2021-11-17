@@ -24,19 +24,20 @@ header {
   padding-left: 1.2rem;
 }
 
-.mainHeader{
+.mainHeader {
   font-family: var(--primaryfont);
   font-size: 1.8rem;
 }
 
-.projectPreview{
-  margin:1.9rem 0rem ;
+.projectPreview {
+  margin: 1.9rem 0rem;
   /* border: 5px solid red; */
-  width:50%
-  
+  width: 50%;
 }
 
-
+.hidden {
+  display: none;
+}
 
 .title {
   padding-left: 0.5rem;
@@ -95,31 +96,27 @@ main {
   margin-top: 1.3rem;
 }
 
-[data-isSelected]{
+[data-isSelected] {
   background-color: #ccc;
-
 }
 
-.project {
+.projectText {
   margin-top: 1.5rem;
   font-size: 1.8rem;
   margin-left: 1.1rem;
   font-weight: lighter;
 }
 
-.form{
+.form {
   border-radius: 1rem;
   margin-bottom: 1rem;
   font-family: var(--secondaryfont);
- 
-
 }
-
 
 input button {
   border: none;
 }
 
-#todo-container{
+#todo-container {
   background-color: violet;
 }
