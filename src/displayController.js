@@ -37,8 +37,8 @@ const display = (() => {
 
   function displayTodo(main) {
     const container = _addNodeOn(main, "div");
-    const todo=container[0];
-
+    const todo = container[0];
+    return todo;
   }
 
   function _asideContentOn(asideDiv) {
@@ -56,6 +56,7 @@ const display = (() => {
     const todayDiv = asideNodes[1];
     todayDiv.classList.add("today");
     todayDiv.classList.add("asideText");
+    todayDiv.setAttribute("data-isSelected", "yes");
     const thisWeekDiv = asideNodes[2];
     thisWeekDiv.classList.add("thisWeek");
     thisWeekDiv.classList.add("asideText");
@@ -79,7 +80,6 @@ const display = (() => {
     addProject.textContent = "Add Project";
     addProject.classList.add("asideText");
 
-
     addProject.setAttribute("id", "addProject");
   }
 
@@ -90,11 +90,9 @@ const display = (() => {
     button.classList.add("asideText");
     button.classList.add("button");
 
-
     input.classList.add("form");
     input.classList.add("asideText");
     input.classList.add("projectName");
-
 
     button.textContent = "Add to-do";
     // add[0].classList.add("form")
@@ -103,4 +101,35 @@ const display = (() => {
 
   return { makeDom, headerChildOn, mainChildOn, displayTodo };
 })();
-export { display };
+
+const onClickCategories = () => {
+  const inboxNode = document.querySelector(".inbox");
+  const todayNode = document.querySelector(".today");
+  const thisWeekNode = document.querySelector(".thisWeek");
+  const categories = [inboxNode, todayNode, thisWeekNode];
+
+  const _selected = (node) => {
+    let alreadySelected;
+    categories.forEach((category) => {
+      return category.getAttribute("data-isSelected") === "yes"
+        ? (alreadySelected = category)
+        : console.log("no selected found");
+    });
+    alreadySelected !== undefined
+      ? alreadySelected.removeAttribute("data-isSelected")
+      : console.log("ERROR WHIILE REMOVING SELECTED");
+    node.setAttribute("data-isSelected", "yes");
+  };
+  inboxNode.onclick = () => {
+    _selected(inboxNode);
+  };
+
+  todayNode.onclick = () => {
+    _selected(todayNode);
+  };
+  thisWeekNode.onclick = () => {
+    _selected(thisWeekNode);
+  };
+};
+
+export { display, onClickCategories };

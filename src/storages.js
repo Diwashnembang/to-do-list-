@@ -41,7 +41,7 @@ export class storage {
 }
   return count;
 }
-  #formatData(projectName, task, discription, priority) {
+  #formatData(projectName, task, discription, priority,date) {
     const object = {};
     const todos = {};
     const todo = {};
@@ -65,17 +65,19 @@ export class storage {
     
     object[projectName].discription = discription;
     object[projectName].priority = priority;
-    console.log(object)
+    object[projectName].date = date;
+    
     return object;
   }
 
 
   // todo : add a way to edit the data and add date also
+  // * use JSON.stringyfy to compare two object
 
-  store(projectName,task, discription, priority) {
-    let data = this.#formatData(projectName, task, discription, priority);
-    // this.storage.push(data);
+  store(projectName,task, discription, priority,date) {
+    let data = this.#formatData(projectName, task, discription, priority,date);
+    this.storage.push(data);
 
-    this.storage[0]=data;
+    // this.storage[0]=data;
   }
 }

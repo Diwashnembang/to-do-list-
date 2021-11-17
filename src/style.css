@@ -77,7 +77,11 @@ main {
 
 .inbox {
   margin-top: 1.3rem;
+}
+
+[data-isSelected]{
   background-color: #ccc;
+
 }
 
 .project {
