@@ -35,7 +35,6 @@ const display = (() => {
     const projectPreview = addNodeOn(main, "div");
     projectPreview[0].classList.add("projectPreview");
     projectPreview[0].textContent = " ";
-    console.log(projectPreview);
   }
 
   function displayTodo(main) {
@@ -95,7 +94,7 @@ const display = (() => {
 
   function _addProjecForm(container) {
     const form = addNodeBefore(container, "div");
- 
+
     // project.classList.add("hidden")
     form.classList.add("hidden");
     form.classList.add("addProjectForm");
@@ -103,18 +102,52 @@ const display = (() => {
     const button = addNodeOn(form, "button")[0];
     button.classList.add("asideText");
     button.classList.add("button");
-   
 
     input.classList.add("form");
     input.classList.add("asideText");
     input.classList.add("projectName");
-   
+
     button.textContent = "Add to-do";
     // add[0].classList.add("form")
     // form.textContent="hello world"
   }
 
-  return { makeDom, headerChildOn, mainChildOn, displayTodo, mainHeader ,addNodeOn,addNodeBefore};
+  // @param storage is the array and containerNode is the div that contains projects in aside
+  const renderProjectList = (storage, containerNode) => {
+    let projectNode;
+    const _removeNode = (div) => {
+      const childrens = Array.from(div.children);
+      for (let i = 0; i < childrens.length; i++) {
+        if (
+          //!remeove everything except the form and add project text
+          childrens[i].getAttribute("class") == "addProjectForm" ||
+          childrens[i].getAttribute("id") == "addProject"
+        ) {
+          return;
+        }
+        childrens[i].remove();
+      }
+    };
+    _removeNode(containerNode);
+    const projectLists = display.addNodeBefore(containerNode, "div");
+    projectLists.classList.add("projectLists");
+    storage.forEach((project) => {
+      projectNode = display.addNodeOn(projectLists, "div")[0];
+      projectNode.textContent = Object.keys(project)[0];
+      projectNode.classList.add("asideText");
+    });
+  };
+
+  return {
+    makeDom,
+    headerChildOn,
+    mainChildOn,
+    displayTodo,
+    mainHeader,
+    addNodeOn,
+    addNodeBefore,
+    renderProjectList,
+  };
 })();
 
 const onClickCategories = () => {
@@ -137,23 +170,63 @@ const onClickCategories = () => {
     node.setAttribute("data-isSelected", "yes");
   };
   const _addheader = (node) => {
-    projectPreview.textContent="";
+    projectPreview.textContent = "";
     const header = display.mainHeader(projectPreview);
     header.textContent = node.textContent;
   };
-  inboxNode.onclick = () => {
-    _selected(inboxNode);
-    _addheader(inboxNode);
-  };
 
-  todayNode.onclick = () => {
-    _selected(todayNode);
-    _addheader(todayNode);
-  };
-  thisWeekNode.onclick = () => {
-    _selected(thisWeekNode);
-    _addheader(thisWeekNode);
-  };
+    
+    inboxNode.onclick = () => {
+      _selected(inboxNode);
+      _addheader(inboxNode);
+    };
+
+    todayNode.onclick = () => {
+      _selected(todayNode);
+      _addheader(todayNode);
+    };
+    thisWeekNode.onclick = () => {
+      _selected(thisWeekNode);
+      _addheader(thisWeekNode);
+    };
+
+
+
 };
 
-export { display, onClickCategories };
+const eventOnProjectList=()=>{
+  let categories=Array.from(document.querySelector('.projectLists').children);
+  const inboxNode = document.querySelector(".inbox");
+  const todayNode = document.querySelector(".today");
+  const thisWeekNode = document.querySelector(".thisWeek");
+  categories.push(inboxNode,todayNode,thisWeekNode);
+  const projectPreview=document.querySelector('.projectPreview');
+  const _selected = (node) => {
+    let alreadySelected;
+    categories.forEach((category) => {
+      return category.getAttribute("data-isSelected") === "yes"
+        ? (alreadySelected = category)
+        : console.log("no selected found");
+    });
+    alreadySelected !== undefined
+      ? alreadySelected.removeAttribute("data-isSelected")
+      : console.log("ERROR WHIILE REMOVING SELECTED");
+    node.setAttribute("data-isSelected", "yes");
+  };
+  const _addheader = (node) => {
+    projectPreview.textContent = "";
+    const header = display.mainHeader(projectPreview);
+    header.textContent = node.textContent;
+  };
+  categories.forEach(project=>{
+    
+    project.onclick=()=>{
+      _selected(project);
+      _addheader(project)
+    }
+  })
+  
+
+}
+
+export { display, onClickCategories ,eventOnProjectList};

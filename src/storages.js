@@ -71,7 +71,5 @@ export class storage {
   store(projectName,task, discription, priority,date) {
     let data = this.#formatData(projectName, task, discription, priority,date);
     this.storage.push(data);
-
-    // this.storage[0]=data;
   }
 }
