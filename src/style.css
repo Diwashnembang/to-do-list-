@@ -71,9 +71,16 @@ main {
   font-family: var(--primaryfont);
 }
 
+#addTask {
+  width: 100%;
+  /* background: rgba(128, 128, 128, 0.1); */
+  background: rgba(105, 105, 105, 0.05);
+  margin-left: 0;
+}
 .fa-inbox,
 .fa-calendar-week,
-.fa-calendar-day {
+.fa-calendar-day,
+.fa-plus {
   color: black;
   font-size: 1rem;
   padding-right: 0.8rem;
@@ -98,6 +105,7 @@ main {
 
 [data-isSelected] {
   background-color: #ccc;
+  border-radius: 0.2rem;
 }
 
 .projectText {
@@ -107,15 +115,60 @@ main {
   font-weight: lighter;
 }
 
-.form {
-  border-radius: 1rem;
-  margin-bottom: 1rem;
+input {
+  border: none;
+  appearance: none;
+  background: #f2f2f2;
+  border-radius: 3px;
+  margin: 1rem 0rem;
   font-family: var(--secondaryfont);
+  padding:0 0.2rem 0 0.2rem;
+  
 }
 
-input button {
+input:focus{
+  outline: none;
+}
+
+ button {
+   background: transparent;
+  box-shadow: 0px 0px 0px transparent;
+  border: 0px solid transparent;
+  text-shadow: 0px 0px 0px transparent;
+}
+
+
+button:active {
+  outline: none;
   border: none;
 }
+
+button:focus {
+  outline: 0;
+}
+.button {
+  width: 50%;
+  background: #aaffaa;
+  border: 1px solid #99dd99;;
+  margin-left: 1.1rem;
+  font-size: 1.1rem;
+  height: 2.5rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+}
+
+.asideButtonContainer{
+  width: 87%;
+  display: flex;
+  justify-content: center;
+ 
+}
+
+.asideButtonContainer .cancel{
+  border: 1px solid #eeadad;
+  background-color: #ffbebe;
+}
+
 
 #todo-container {
   background-color: violet;

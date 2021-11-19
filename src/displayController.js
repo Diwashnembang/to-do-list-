@@ -86,7 +86,7 @@ const display = (() => {
   function _projectChildOn(wrappingDiv) {
     const divNode = addNodeOn(wrappingDiv, "div");
     const addProject = addNodeBefore(divNode[0], "div");
-    addProject.textContent = "Add Project";
+    addProject.innerHTML = `<i class="fas fa-plus"></i>Add Prject`;
     addProject.classList.add("asideText");
 
     addProject.setAttribute("id", "addProject");
@@ -99,17 +99,27 @@ const display = (() => {
     form.classList.add("hidden");
     form.classList.add("addProjectForm");
     const input = addNodeOn(form, "input")[0];
-    const button = addNodeOn(form, "button")[0];
-    button.classList.add("asideText");
+    const buttons=addNodeOn(form,"div")[0];
+    buttons.classList.add("asideButtonContainer");
+    const button = addNodeOn(buttons, "button")[0];
+    const cancelbtutton=addNodeOn(buttons,"button")[0];
     button.classList.add("button");
+    button.classList.add("add");
+
+    cancelbtutton.classList.add("button");
+    cancelbtutton.classList.add("cancel");
+
+
+    
+    
 
     input.classList.add("form");
     input.classList.add("asideText");
     input.classList.add("projectName");
 
-    button.textContent = "Add to-do";
-    // add[0].classList.add("form")
-    // form.textContent="hello world"
+    button.textContent = "Add";
+    cancelbtutton.textContent="Cancel"
+
   }
 
   // @param storage is the array and containerNode is the div that contains projects in aside
@@ -138,6 +148,15 @@ const display = (() => {
     });
   };
 
+  const addTask=(node)=>{
+    const addTaskText=addNodeOn(node,"div")[0];
+    addTaskText.innerHTML = `<i class="fas fa-plus"></i> Add Task  `;
+    addTaskText.classList.add("asideText")
+    addTaskText.setAttribute("id","addTask");
+    addTaskText.setAttribute("data-isSelected", "yes");
+
+  }
+
   return {
     makeDom,
     headerChildOn,
@@ -147,6 +166,7 @@ const display = (() => {
     addNodeOn,
     addNodeBefore,
     renderProjectList,
+    addTask
   };
 })();
 
@@ -179,6 +199,8 @@ const onClickCategories = () => {
     inboxNode.onclick = () => {
       _selected(inboxNode);
       _addheader(inboxNode);
+      display.addTask(projectPreview);
+      
     };
 
     todayNode.onclick = () => {
@@ -222,7 +244,9 @@ const eventOnProjectList=()=>{
     
     project.onclick=()=>{
       _selected(project);
-      _addheader(project)
+      _addheader(project);
+      display.addTask(projectPreview);
+
     }
   })
   
