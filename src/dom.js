@@ -27,17 +27,15 @@ export class dom {
   }
 
   prependNodeOn(parentDiv, type) {
-    const newNode=document.createElement(type);
+    const newNode = document.createElement(type);
     parentDiv.prepend(newNode);
     return newNode;
   }
 
-  dataTypeOn(div,type,value){
-    return div.setAttribite(`data-${type}`,`${value}`);
+  dataTypeOn(div, type, value) {
+    return div.setAttribite(`data-${type}`, `${value}`);
   }
   clear(dom) {
     dom.textContent = "";
   }
-
-  
 }

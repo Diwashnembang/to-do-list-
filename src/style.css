@@ -122,21 +122,20 @@ input {
   border-radius: 3px;
   margin: 1rem 0rem;
   font-family: var(--secondaryfont);
-  padding:0 0.2rem 0 0.2rem;
-  
+  padding: 0 1rem 0 0.2rem;
+  border: solid 1px var(--secondary-dark);
 }
 
-input:focus{
+input:focus {
   outline: none;
 }
 
- button {
-   background: transparent;
+button {
+  background: transparent;
   box-shadow: 0px 0px 0px transparent;
   border: 0px solid transparent;
   text-shadow: 0px 0px 0px transparent;
 }
-
 
 button:active {
   outline: none;
@@ -149,7 +148,7 @@ button:focus {
 .button {
   width: 50%;
   background: #aaffaa;
-  border: 1px solid #99dd99;;
+  border: 1px solid #99dd99;
   margin-left: 1.1rem;
   font-size: 1.1rem;
   height: 2.5rem;
@@ -157,18 +156,16 @@ button:focus {
   cursor: pointer;
 }
 
-.asideButtonContainer{
+.asideButtonContainer {
   width: 87%;
   display: flex;
   justify-content: center;
- 
 }
 
-.asideButtonContainer .cancel{
+.asideButtonContainer .cancel {
   border: 1px solid #eeadad;
   background-color: #ffbebe;
 }
-
 
 #todo-container {
   background-color: violet;

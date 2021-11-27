@@ -1,3 +1,6 @@
+import { storage } from "./storages";
+
+const memory = new storage();
 const display = (() => {
   let _page = null;
   // *https://fontawesome.com/v5.15/icons/check-double?style=solid for the logo .give credit
@@ -62,10 +65,10 @@ const display = (() => {
     const inboxDiv = asideNodes[0];
     inboxDiv.classList.add("inbox");
     inboxDiv.classList.add("asideText");
+    inboxDiv.setAttribute("data-isSelected", "yes");
     const todayDiv = asideNodes[1];
     todayDiv.classList.add("today");
     todayDiv.classList.add("asideText");
-    todayDiv.setAttribute("data-isSelected", "yes");
     const thisWeekDiv = asideNodes[2];
     thisWeekDiv.classList.add("thisWeek");
     thisWeekDiv.classList.add("asideText");
@@ -80,46 +83,42 @@ const display = (() => {
     thisWeekDiv.innerHTML = "<i class='fas fa-calendar-week'></i>This Week";
     projectDiv.textContent = "Project";
     _projectChildOn(wrapProjectsDiv);
-    _addProjecForm(wrapProjectsDiv);
+    const form = addProjectForm(wrapProjectsDiv);
+    form.form.classList.add("addProjectForm");
   }
 
   function _projectChildOn(wrappingDiv) {
-    const divNode = addNodeOn(wrappingDiv, "div");
-    const addProject = addNodeBefore(divNode[0], "div");
+    // const divNode = addNodeOn(wrappingDiv, "div");
+    const addProject = addNodeBefore(wrappingDiv, "div");
     addProject.innerHTML = `<i class="fas fa-plus"></i>Add Prject`;
     addProject.classList.add("asideText");
 
     addProject.setAttribute("id", "addProject");
   }
 
-  function _addProjecForm(container) {
-    const form = addNodeBefore(container, "div");
+  function addProjectForm(container) {
+    const form = addNodeOn(container, "div")[0];
 
     // project.classList.add("hidden")
     form.classList.add("hidden");
-    form.classList.add("addProjectForm");
     const input = addNodeOn(form, "input")[0];
-    const buttons=addNodeOn(form,"div")[0];
+    const buttons = addNodeOn(form, "div")[0];
     buttons.classList.add("asideButtonContainer");
     const button = addNodeOn(buttons, "button")[0];
-    const cancelbtutton=addNodeOn(buttons,"button")[0];
+    const cancelbtutton = addNodeOn(buttons, "button")[0];
     button.classList.add("button");
     button.classList.add("add");
 
     cancelbtutton.classList.add("button");
     cancelbtutton.classList.add("cancel");
 
-
-    
-    
-
     input.classList.add("form");
     input.classList.add("asideText");
     input.classList.add("projectName");
 
     button.textContent = "Add";
-    cancelbtutton.textContent="Cancel"
-
+    cancelbtutton.textContent = "Cancel";
+    return { form, button, cancelbtutton, input };
   }
 
   // @param storage is the array and containerNode is the div that contains projects in aside
@@ -135,6 +134,7 @@ const display = (() => {
         ) {
           return;
         }
+        console.log(childrens[i].getAttribute("id"));
         childrens[i].remove();
       }
     };
@@ -142,20 +142,120 @@ const display = (() => {
     const projectLists = display.addNodeBefore(containerNode, "div");
     projectLists.classList.add("projectLists");
     storage.forEach((project) => {
-      projectNode = display.addNodeOn(projectLists, "div")[0];
-      projectNode.textContent = Object.keys(project)[0];
-      projectNode.classList.add("asideText");
+      console.log("this is programm", project);
+      if (Object.keys(project)[0] !== "Inbox") {
+        projectNode = display.addNodeOn(projectLists, "div")[0];
+        projectNode.textContent = Object.keys(project)[0];
+        projectNode.classList.add("asideText");
+      }
     });
   };
 
-  const addTask=(node)=>{
-    const addTaskText=addNodeOn(node,"div")[0];
+  const addTaskText = (node) => {
+    const addTaskText = addNodeOn(node, "div")[0];
     addTaskText.innerHTML = `<i class="fas fa-plus"></i> Add Task  `;
-    addTaskText.classList.add("asideText")
-    addTaskText.setAttribute("id","addTask");
+    addTaskText.classList.add("asideText");
+    addTaskText.setAttribute("id", "addTask");
     addTaskText.setAttribute("data-isSelected", "yes");
+    // const form =_addProjectForm();
+    // form.classList.add("addTaskForm");
 
-  }
+    return addTaskText;
+  };
+
+  const taskContainer = (Node) => {
+    const taskPreview = addNodeOn(Node, "div")[0];
+    taskPreview.setAttribute("id", "taskPreview");
+    taskPreview.textContent = " this is container";
+    return taskPreview;
+  };
+
+  // const addTask = (taskContainer,task) => {
+  //   const task = addNodeOn(taskContainer, "div")[0];
+  //   task.classList.add("tasks");
+
+  // };
+
+  const renderProjectPreviewContent = (projectPreview) => {
+    const todoPreview = taskContainer(projectPreview);
+    const addTaskNode = addTaskText(projectPreview);
+    const form = addProjectForm(projectPreview);
+    form.form.classList.add("addTaskForm");
+    const header = todoPreview.previousElementSibling.textContent;
+    // @param (container, projectName)
+    _appendTodo(todoPreview, header);
+    addTaskNode.addEventListener("click", () => {
+      form.form.classList.remove("hidden");
+      addTaskNode.style.display = "none";
+      console.log(form.input);
+
+      // @param (addButton, container,header,todo,discription,priority,date)
+      addTodoEvent(form.button, todoPreview, header, form.input);
+    });
+
+    function _appendTodo(container, projectName) {
+      const _removeNode = () => {
+        container.textContent = "";
+      };
+      //  todo : add event listner if project is clicked store with project if inbox is selected store in inbox array
+
+      for (let i = 0; i < memory.project.length; i++) {
+        if (projectName !== "thisWeek" || projectName !== "Today") {
+          // *if key == projectName because project Name alreday exist if we are adding to do
+          if (Object.keys(memory.project[i])[0] === projectName) {
+            _removeNode(container);
+            // console.log(memory.project[i][projectName].todos);
+            for (const todo in memory.project[i][projectName].todos) {
+              if (memory.project[i][projectName].todos[todo] === undefined)
+                continue;
+
+              const todoDiv = addNodeOn(container, "div")[0];
+              todoDiv.classList.add("todo");
+              todoDiv.classList.add("asideText");
+              todoDiv.textContent = memory.project[i][projectName].todos[todo];
+            }
+          }
+        }
+      }
+    }
+    const addTodoEvent = (
+      addButton,
+      container,
+      header,
+      todo,
+      discription,
+      priority,
+      date
+    ) => {
+      addButton.onclick = () => {
+        //@param store(projectName,task, discription, priority,date)
+        memory.store(header, todo.value, discription, priority, date);
+        // @param (container, projectName; )
+        _appendTodo(container, header);
+      };
+    };
+  };
+
+  const displayProjectList = (
+    input,
+    containerNode,
+    addProjectFormNode,
+    addProject
+  ) => {
+    // @param store(projectName,task, discription, priority,date)
+    memory.store(input.value);
+    // @param storage is the array and containerNode is the div that contains projects in aside
+    renderProjectList(memory.project, containerNode);
+    eventOnProjectList();
+    addProjectFormNode.classList.add("hidden");
+    addProject.style.display = "flex";
+  };
+
+  // const dispalySavedTodos=(projectName)=>{
+  //   memory.project.forEach(project=>{
+
+  //   })
+  // }
 
   return {
     makeDom,
@@ -166,7 +266,11 @@ const display = (() => {
     addNodeOn,
     addNodeBefore,
     renderProjectList,
-    addTask
+    addTaskText,
+    taskContainer,
+    addProjectForm,
+    renderProjectPreviewContent,
+    displayProjectList,
   };
 })();
 
@@ -195,34 +299,31 @@ const onClickCategories = () => {
     header.textContent = node.textContent;
   };
 
-    
-    inboxNode.onclick = () => {
-      _selected(inboxNode);
-      _addheader(inboxNode);
-      display.addTask(projectPreview);
-      
-    };
+  inboxNode.onclick = () => {
+    _selected(inboxNode);
+    _addheader(inboxNode);
+    display.renderProjectPreviewContent(projectPreview);
+    // display.addTaskText(projectPreview);
+  };
 
-    todayNode.onclick = () => {
-      _selected(todayNode);
-      _addheader(todayNode);
-    };
-    thisWeekNode.onclick = () => {
-      _selected(thisWeekNode);
-      _addheader(thisWeekNode);
-    };
-
-
-
+  todayNode.onclick = () => {
+    _selected(todayNode);
+    _addheader(todayNode);
+  };
+  thisWeekNode.onclick = () => {
+    _selected(thisWeekNode);
+    _addheader(thisWeekNode);
+  };
 };
 
-const eventOnProjectList=()=>{
-  let categories=Array.from(document.querySelector('.projectLists').children);
+const eventOnProjectList = () => {
+  let categories = Array.from(document.querySelector(".projectLists").children);
   const inboxNode = document.querySelector(".inbox");
   const todayNode = document.querySelector(".today");
   const thisWeekNode = document.querySelector(".thisWeek");
-  categories.push(inboxNode,todayNode,thisWeekNode);
-  const projectPreview=document.querySelector('.projectPreview');
+
+  categories.push(inboxNode, todayNode, thisWeekNode);
+  const projectPreview = document.querySelector(".projectPreview");
   const _selected = (node) => {
     let alreadySelected;
     categories.forEach((category) => {
@@ -237,20 +338,33 @@ const eventOnProjectList=()=>{
   };
   const _addheader = (node) => {
     projectPreview.textContent = "";
+
     const header = display.mainHeader(projectPreview);
-    header.textContent = node.textContent;
+    if (
+      node.textContent.split(" ").join("") === "Inbox" ||
+      node.textContent.split(" ").join("") === "thisWeek" ||
+      node.textContent.split(" ").join("") === "Today"
+    ) {
+      header.textContent = node.textContent.split(" ").join("");
+    } else {
+      header.textContent = node.textContent;
+    }
+    console.log(header.textContent);
   };
-  categories.forEach(project=>{
-    
-    project.onclick=()=>{
+  categories.forEach((project) => {
+    project.onclick = () => {
       _selected(project);
       _addheader(project);
-      display.addTask(projectPreview);
+      if (
+        project.textContent.split(" ")[1] === "Week" ||
+        project.textContent.split(" ")[1] === "Today"
+      ) {
+        console.log("EXIT FROM PROJECT.ONCLICK");
+      } else {
+        display.renderProjectPreviewContent(projectPreview);
+      }
+    };
+  });
+};
 
-    }
-  })
-  
-
-}
-
-export { display, onClickCategories ,eventOnProjectList};
+export { display, onClickCategories, eventOnProjectList };
